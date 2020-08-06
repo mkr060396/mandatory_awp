@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 
-class AddQuestion extends Component {
+class AddItem extends Component {
 
     constructor(props) {
         super(props);
@@ -17,16 +17,16 @@ class AddQuestion extends Component {
     }
 
     onSubmit() {
-        this.props.addQuestion(this.state.questions);
+        this.props.AddItem(this.state.questions);
     }
     render() {
         return (
             <>
-                <input name="questions" onChange={event => this.onChange(event)} type="text"/>
-                <button onClick={_ => this.onSubmit()}>Add question</button>
+                <input name="items" onChange={event => this.onChange(event)} type="text"/>
+                <button onClick={_ => this.onSubmit()}>Post an Auction</button>
             </>
         );
     }
 }
 
-export default AddQuestion;
+export default AddItem;

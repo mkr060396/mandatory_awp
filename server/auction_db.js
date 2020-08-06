@@ -5,44 +5,68 @@ class Db {
      */
     constructor(mongoose) {
         // This is the schema we need to store kittens in MongoDB
-        const questionSchema = new mongoose.Schema({
-            name: String,
-            text: [String] // A list of hobbies as string
+
+        const Schema = mongoose.Schema;
+
+        let itemSchema = new Schema ({
+            title: String, 
+            item: [{
+            id: int,
+            description: String,
+            creatorId: int,
+            date: Date,
+            bid: int
+        }]
         });
+        
+        let UserSchema = new Schema ({
+            user: {
+            id: int,
+            name: String,
+            role: String,
+            username: String,
+            password: String
+            }
+        });
+        
 
         // This model is used in the methods of this class to access kittens
-        this.questionModel = mongoose.model('question', questionSchema);
-    }
+        const itemModel = mongoose.model(itemModel, itemSchema);
 
-    async getQuestion() {
+        const userModel = mongoose.model(userModel, UserSchema);
+        
+        }
+    
+
+    async getItem() {
         try {
-            return await this.questionModel.find({});
+            return await this.itemModel.find({});
         } catch (error) {
-            console.error("getQuestions:", error.message);
+            console.error("getItems:", error.message);
             return {};
         }
     }
 
-    async getQuestions(id) {
+    async getItems(id) {
         try {
-            return await this.questionModel.findById(id);
+            return await this.itemModel.findById(id);
         } catch (error) {
-            console.error("getQuestion:", error.message);
+            console.error("getItem:", error.message);
             return {};
         }
     }
 
-    async createQuestion(newQuestion) {
+    async AddItem(newItem) {
         // TODO: Error handling
-        let question = new this.questionModel(newQuestion);
-        return await question.save();
+        let item = new this.questionModel(newItem);
+        return await item.save();
     }
 
-    async addtext(questionId, text) {
+    async addtext(itemId, text) {
         // TODO: Error handling
-        const question = await this.getQuestion(questionId);
-        question.text.push(text);
-        return await question.save();
+        const item = await this.getItem(itemId);
+        item.text.push(text);
+        return await item.save();
     }
 
     /**
